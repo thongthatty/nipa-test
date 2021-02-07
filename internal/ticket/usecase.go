@@ -23,12 +23,12 @@ func (tr *Ticket) Get(c echo.Context) error {
 		return c.JSON(http.StatusUnprocessableEntity, helper.NewError(err))
 	}
 
-	ss, err := tr.ticketRepo.Get(page, pageSize, statusFilter, rangeTimeFilter)
+	results, err := tr.ticketRepo.Get(page, pageSize, statusFilter, rangeTimeFilter)
 	if err != nil {
 		return c.JSON(http.StatusUnprocessableEntity, helper.NewError(err))
 	}
 
-	return c.JSON(http.StatusOK, ss)
+	return c.JSON(http.StatusOK, results)
 }
 
 // Create usecase for create infomation of ticket
