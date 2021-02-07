@@ -34,6 +34,10 @@ make dev
 make all
 ```
 
+## Api doc
+http://localhost:1323/swagger/index.html
+
+
 ## Example
 ```sh
 curl --location --request GET 'http://localhost:1323/api/ticket'

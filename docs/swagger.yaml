@@ -1,0 +1,165 @@
+basePath: /api
+definitions:
+  helper.Error:
+    properties:
+      errors:
+        additionalProperties: true
+        type: object
+    type: object
+  model.Ticket:
+    properties:
+      contactInfo:
+        type: string
+      createAt:
+        type: string
+      desc:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+      status:
+        type: string
+      updateAt:
+        type: string
+    type: object
+  model.TicketCreateRequest:
+    properties:
+      contactInfo:
+        type: string
+      desc:
+        type: string
+      name:
+        type: string
+    required:
+    - name
+    type: object
+  model.TicketStatusUpdateRequest:
+    properties:
+      status:
+        type: string
+    required:
+    - status
+    type: object
+host: 127.0.0.1:1323
+info:
+  contact:
+    email: support@swagger.io
+    name: API Support
+    url: http://www.swagger.io/support
+  description: This is a sample server Petstore server.
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: Swagger Example API
+  version: "1.0"
+paths:
+  /ticket:
+    get:
+      description: GET TICKETS
+      parameters:
+      - description: Start date (Unix time)
+        in: query
+        name: from
+        type: integer
+      - description: End date (Unix time)
+        in: query
+        name: to
+        type: integer
+      - description: Filter by ticket status
+        enum:
+        - PENDING
+        - ACCEPTED
+        - RESOLVED
+        - REJECTED
+        in: query
+        name: status
+        type: string
+      - description: page of pagination
+        in: query
+        minimum: 1
+        name: page
+        type: integer
+      - description: total record to show
+        in: query
+        minimum: 100
+        name: page_size
+        type: integer
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/model.Ticket'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/helper.Error'
+        "422":
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/helper.Error'
+      summary: GET TICKETS
+      tags:
+      - GET TICKETS
+    post:
+      consumes:
+      - application/json
+      description: CREATE TICKET
+      parameters:
+      - description: Body of ticket
+        in: body
+        name: ticketInfo
+        required: true
+        schema:
+          $ref: '#/definitions/model.TicketCreateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Ticket'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/helper.Error'
+        "422":
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/helper.Error'
+      summary: CREATE TICKET
+      tags:
+      - CREATE TICKETS
+    put:
+      consumes:
+      - application/json
+      description: UPDATE TICKET
+      parameters:
+      - description: Body of ticket
+        in: body
+        name: ticketInfo
+        required: true
+        schema:
+          $ref: '#/definitions/model.TicketStatusUpdateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Update ticket successfully
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/helper.Error'
+        "422":
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/helper.Error'
+      summary: UPDATE TICKET
+      tags:
+      - UPDATE TICKETS
+swagger: "2.0"

@@ -8,10 +8,19 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
-// Get usecase for get infomation of ticket
-// @Router / [get]
-// @Query ?page ?pageSize ?status
-// e.g. http://localhost:1323/api/ticket?page=1&pageSize=10&status=REJECTED
+// Get godoc
+// @Summary GET TICKETS
+// @Description GET TICKETS
+// @Tags GET TICKETS
+// @Param from query int false "Start date (Unix time)"
+// @Param to query int false "End date (Unix time)"
+// @Param status query string false "Filter by ticket status" Enums(PENDING, ACCEPTED, RESOLVED, REJECTED)
+// @Param page query int false "page of pagination" minimum(1)
+// @Param page_size query int false "total record to show" minimum(100)
+// @Success 200 {array} model.Ticket
+// @Failure 400 {object} helper.Error
+// @Failure 422 {object} helper.Error
+// @Router /ticket [get]
 func (tr *Ticket) Get(c echo.Context) error {
 	var (
 		err error
@@ -31,8 +40,17 @@ func (tr *Ticket) Get(c echo.Context) error {
 	return c.JSON(http.StatusOK, results)
 }
 
-// Create usecase for create infomation of ticket
-// @Router / [post]
+// Create godoc
+// @Summary CREATE TICKET
+// @Description CREATE TICKET
+// @Tags CREATE TICKETS
+// @Accept  json
+// @Produce  json
+// @Param ticketInfo body model.TicketCreateRequest true "Body of ticket"
+// @Success 200 {object} model.Ticket
+// @Failure 400 {object} helper.Error
+// @Failure 422 {object} helper.Error
+// @Router /ticket [post]
 func (tr *Ticket) Create(c echo.Context) error {
 	var (
 		tk   model.Ticket
@@ -50,8 +68,17 @@ func (tr *Ticket) Create(c echo.Context) error {
 	return c.JSON(http.StatusCreated, resp)
 }
 
-// Update usecase for update infomation of ticket
-// @Router /:id [put]
+// Update godoc
+// @Summary UPDATE TICKET
+// @Description UPDATE TICKET
+// @Tags UPDATE TICKETS
+// @Accept  json
+// @Produce  json
+// @Param ticketInfo body model.TicketStatusUpdateRequest true "Body of ticket"
+// @Success 200 {string} string "Update ticket successfully"
+// @Failure 400 {object} helper.Error
+// @Failure 422 {object} helper.Error
+// @Router /ticket [put]
 func (tr *Ticket) Update(c echo.Context) error {
 	var (
 		tk  model.Ticket
