@@ -33,3 +33,19 @@ make dev
 ```sh
 make all
 ```
+
+## Example
+```sh
+curl --location --request GET 'http://localhost:1323/api/ticket'
+curl --location --request GET 'http://localhost:1323/api/ticket?status=PENDING&from=${unix_time}&to=${unix_time}&page=1&page_size=10'
+curl --location --request PUT 'http://localhost:1323/api/ticket/1' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+	"status": "REJECTED"
+}'
+curl --location --request POST 'http://localhost:1323/api/ticket' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+	"name": "test"
+}'
+```
